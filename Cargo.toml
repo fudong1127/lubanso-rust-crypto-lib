@@ -1,5 +1,5 @@
 [workspace]
 
 members = [
-    "hashes", "bitcoin", "hashes"
+    "hashes", "bitcoin", "internals"
 ]

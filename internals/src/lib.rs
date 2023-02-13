@@ -1,14 +1,37 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+// Written by the Rust Bitcoin developers.
+// SPDX-License-Identifier: CC0-1.0
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+//! # Rust Bitcoin Internal
+//!
+//! This crate is only meant to be used internally by crates in the
+//! [rust-bitcoin](https://github.com/rust-bitcoin) ecosystem.
+//!
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#![no_std]
+// Experimental features we need.
+#![cfg_attr(docsrs, feature(doc_cfg))]
+// Coding conventions
+#![deny(non_upper_case_globals)]
+#![deny(non_camel_case_types)]
+#![deny(non_snake_case)]
+#![deny(unused_mut)]
+#![deny(dead_code)]
+#![deny(unused_imports)]
+#![deny(missing_docs)]
+#![deny(unused_must_use)]
+
+#[cfg(feature = "alloc")]
+extern crate alloc;
+
+#[cfg(feature = "std")]
+extern crate std;
+
+pub mod error;
+pub mod hex;
+pub mod macros;
+
+/// Mainly reexports based on features.
+pub(crate) mod prelude {
+    #[cfg(feature = "alloc")]
+    pub(crate) use alloc::string::String;
 }
