@@ -1,8 +1,7 @@
-extern crate lubanso_crypto_hashes;
+extern crate lubanso_hashes;
 extern crate crypto;
 
-use lubanso_crypto_hashes::Hash;
-use lubanso_crypto_hashes::sha512_256;
+use lubanso_hashes::{Hash, sha512_256};
 use crypto::digest::Digest;
 use crypto::sha2::Sha512Trunc256;
 

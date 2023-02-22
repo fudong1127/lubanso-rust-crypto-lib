@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 //
 
 #[macro_export]

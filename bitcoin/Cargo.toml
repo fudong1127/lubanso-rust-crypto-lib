@@ -1,8 +1,39 @@
 [package]
-name = "bitcoin"
+name = "lubanso-bitcoin"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = [ "std", "secp-recovery" ]
+rand-std = ["secp256k1/rand-std"]
+rand = ["secp256k1/rand"]
+serde = ["actual-serde", "lubanso-hashes/serde", "secp256k1/serde"]
+secp-lowmemory = ["secp256k1/lowmemory"]
+secp-recovery = ["secp256k1/recovery"]
+# At least one of std, no-std must be enabled.
+#
+# The no-std feature doesn't disable std - you need to turn off the std feature for that by disabling default.
+# Instead no-std enables additional features required for this crate to be usable without std.
+# As a result, both can be enabled without conflict.
+std = ["secp256k1/std", "lubanso-hashes/std", "bech32/std", "lubanso-internals/std"]
+no-std = ["core2", "lubanso-hashes/alloc", "lubanso-hashes/core2", "secp256k1/alloc"]
 
 [dependencies]
+lubanso-internals = { path = "../internals"}
+bech32 = { version = "0.9.0", default-features = false }
+lubanso-hashes = { path = "../hashes", default-features = false }
+secp256k1 = { version = "0.25.0", default-features = false, features = ["bitcoin_hashes"] }
+
+core2 = { version = "0.3.0", default-features = false, features = ["alloc"], optional = true }
+# Do NOT use this as a feature! Use the `serde` feature instead.
+actual-serde = { package = "serde", version = "1.0.103", default-features = false, features = [ "derive", "alloc" ], optional = true }
+
+[dev-dependencies]
+serde_json = "1.0.0"
+serde_test = "1.0.19"
+serde_derive = "1.0.103"
+secp256k1 = { version = "0.25.0", features = ["recovery"] }
+bincode = "1.3.1"
+
+[target.'cfg(mutate)'.dev-dependencies]
+mutagen = { git = "https://github.com/llogiq/mutagen" }

@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 //
 // To the extent possible under law, the author(s) have dedicated all
 // copyright and related and neighboring rights to this software to

@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 //
 //! Hash-based Message Authentication Code (HMAC).
 

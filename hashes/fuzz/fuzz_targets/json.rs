@@ -1,10 +1,9 @@
 extern crate serde;
 #[macro_use] extern crate serde_derive;
-extern crate lubanso_crypto_hashes;
+extern crate lubanso_hashes;
 extern crate serde_json;
 
-use lubanso_crypto_hashes::Hmac;
-use lubanso_crypto_hashes::{sha1, sha512, ripemd160, sha256d};
+use lubanso_hashes::{Hmac, sha1, sha512, ripemd160, sha256d};
 
 #[derive(Deserialize, Serialize)]
 struct Hmacs {

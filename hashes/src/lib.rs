@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 //
 //! Rust hashes library.
 //!
@@ -12,8 +12,8 @@
 //! Hashing a single byte slice or a string:
 //!
 //! ```rust
-//! use crypto_hashes::sha256;
-//! use crypto_hashes::Hash;
+//! use lubanso_hashes::sha256;
+//! use lubanso_hashes::Hash;
 //!
 //! let bytes = [0u8; 5];
 //! let hash_of_bytes = sha256::Hash::hash(&bytes);
@@ -24,8 +24,8 @@
 //! Hashing content from a reader:
 //!
 //! ```rust
-//! use crypto_hashes::sha256;
-//! use crypto_hashes::Hash;
+//! use lubanso_hashes::sha256;
+//! use lubanso_hashes::Hash;
 //!
 //! #[cfg(std)]
 //! # fn main() -> std::io::Result<()> {
@@ -44,8 +44,8 @@
 //! Hashing content by [`std::io::Write`] on HashEngine:
 //!
 //! ```rust
-//! use crypto_hashes::sha256;
-//! use crypto_hashes::Hash;
+//! use lubanso_hashes::sha256;
+//! use lubanso_hashes::Hash;
 //! use std::io::Write;
 //!
 //! #[cfg(std)]

@@ -1,8 +1,8 @@
-extern crate lubanso_crypto_hashes;
+extern crate lubanso_hashes;
 extern crate crypto;
 
-use lubanso_crypto_hashes::Hash;
-use lubanso_crypto_hashes::ripemd160;
+use lubanso_hashes::Hash;
+use lubanso_hashes::ripemd160;
 use crypto::digest::Digest;
 use crypto::ripemd160::Ripemd160;
 

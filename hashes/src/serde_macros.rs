@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 //
 //! Macros for serde trait implementations, and supporting code.
 //!

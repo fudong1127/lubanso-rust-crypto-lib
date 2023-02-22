@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 
 // This module is largely copied from the rust-siphash sip.rs file;
 // while rust-siphash is licensed under Apache, that file specifically

@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 // Written in 2019 by
 //   The rust-bitcoin developers.
 //

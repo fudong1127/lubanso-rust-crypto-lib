@@ -1,14 +1,16 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub extern crate lubanso_hashes as hashes;
+
+// May depend on crate features and we don't want to bother with it
+#[allow(unused)]
+#[cfg(feature = "std")]
+use std::error::Error as StdError;
+#[cfg(feature = "std")]
+use std::io;
+
+#[allow(unused)]
+#[cfg(not(feature = "std"))]
+use core2::error::Error as StdError;
+#[cfg(not(feature = "std"))]
+use core2::io;

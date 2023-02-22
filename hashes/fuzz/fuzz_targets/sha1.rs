@@ -1,8 +1,7 @@
-extern crate lubanso_crypto_hashes;
+extern crate lubanso_hashes;
 extern crate crypto;
 
-use lubanso_crypto_hashes::Hash;
-use lubanso_crypto_hashes::sha1;
+use lubanso_hashes::{Hash, sha1};
 use crypto::digest::Digest;
 use crypto::sha1::Sha1;
 

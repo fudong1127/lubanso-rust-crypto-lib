@@ -1,4 +1,4 @@
-// Lubanso Crypto Hashes Library
+// Lubanso Hashes Library
 
 // This module is largely copied from the rust-crypto ripemd.rs file;
 // while rust-crypto is licensed under Apache, that file specifically
