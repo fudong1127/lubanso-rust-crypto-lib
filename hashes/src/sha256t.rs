@@ -88,7 +88,7 @@ crate::internal_macros::hash_trait_impls!(256, true, T: Tag);
 fn from_engine<T: Tag>(e: sha256::HashEngine) -> Hash<T> {
     use crate::Hash as _;
 
-    Hash::from_inner(sha256::Hash::from_engine(e).into_inner())
+    Hash::from_byte_array(sha256::Hash::from_engine(e).to_byte_array())
 }
 
 /// Macro used to define a newtype tagged hash.
@@ -97,11 +97,11 @@ fn from_engine<T: Tag>(e: sha256::HashEngine) -> Hash<T> {
 /// - a sha256t::Hash type alias.
 #[macro_export]
 macro_rules! sha256t_hash_newtype {
-    ($newtype:ident, $tag:ident, $midstate:ident, $midstate_len:expr, $docs:meta, $reverse: expr) => {
-        sha256t_hash_newtype!($newtype, $tag, $midstate, $midstate_len, $docs, $reverse, stringify!($newtype));
+    ($newtype:ident, $tag:ident, $midstate:ident, $midstate_len:expr, $docs:meta, $direction:tt) => {
+        sha256t_hash_newtype!($newtype, $tag, $midstate, $midstate_len, $docs, $direction, stringify!($newtype));
     };
 
-    ($newtype:ident, $tag:ident, $midstate:ident, $midstate_len:expr, $docs:meta, $reverse: expr, $sname:expr) => {
+    ($newtype:ident, $tag:ident, $midstate:ident, $midstate_len:expr, $docs:meta, $direction:tt, $sname:expr) => {
         #[doc = "The tag used for ["]
         #[doc = $sname]
         #[doc = "]"]
@@ -110,19 +110,24 @@ macro_rules! sha256t_hash_newtype {
 
         impl $crate::sha256t::Tag for $tag {
             fn engine() -> $crate::sha256::HashEngine {
-                let midstate = $crate::sha256::Midstate::from_inner($midstate);
+                let midstate = $crate::sha256::Midstate::from_byte_array($midstate);
                 $crate::sha256::HashEngine::from_midstate(midstate, $midstate_len)
             }
         }
 
-        $crate::hash_newtype!($newtype, $crate::sha256t::Hash<$tag>, 32, $docs, $reverse);
+        $crate::hash_newtype! {
+            #[$docs]
+            #[hash_newtype($direction)]
+            pub struct $newtype($crate::sha256t::Hash<$tag>);
+        }
     };
 }
+
 
 #[cfg(test)]
 mod tests {
     use crate::{sha256, sha256t};
-    #[cfg(any(feature = "std", feature = "alloc"))]
+    #[cfg(feature = "alloc")]
     use crate::Hash;
 
     const TEST_MIDSTATE: [u8; 32] = [
@@ -137,19 +142,19 @@ mod tests {
     impl sha256t::Tag for TestHashTag {
         fn engine() -> sha256::HashEngine {
             // The TapRoot TapLeaf midstate.
-            let midstate = sha256::Midstate::from_inner(TEST_MIDSTATE);
+            let midstate = sha256::Midstate::from_byte_array(TEST_MIDSTATE);
             sha256::HashEngine::from_midstate(midstate, 64)
         }
     }
 
     /// A hash tagged with `$name`.
-    #[cfg(any(feature = "std", feature = "alloc"))]
+    #[cfg(feature = "alloc")]
     pub type TestHash = sha256t::Hash<TestHashTag>;
 
-    sha256t_hash_newtype!(NewTypeHash, NewTypeTag, TEST_MIDSTATE, 64, doc="test hash", true);
+    sha256t_hash_newtype!(NewTypeHash, NewTypeTag, TEST_MIDSTATE, 64, doc="test hash", backward);
 
     #[test]
-    #[cfg(any(feature = "std", feature = "alloc"))]
+    #[cfg(feature = "alloc")]
     fn test_sha256t() {
         assert_eq!(
             TestHash::hash(&[0]).to_string(),

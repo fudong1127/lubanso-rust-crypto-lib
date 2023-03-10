@@ -66,11 +66,7 @@
 //! ```
 
 // Coding conventions
-#![deny(non_upper_case_globals)]
-#![deny(non_camel_case_types)]
-#![deny(non_snake_case)]
-#![deny(unused_mut)]
-#![deny(missing_docs)]
+#![warn(missing_docs)]
 
 // Experimental features we need.
 #![cfg_attr(docsrs, feature(doc_cfg))]
@@ -90,8 +86,7 @@
 #[cfg(bench)] extern crate test;
 #[cfg(any(test, feature = "std"))] extern crate core;
 #[cfg(feature = "core2")] extern crate core2;
-#[cfg(feature = "alloc")] extern crate alloc;
-#[cfg(all(not(feature = "alloc"), feature = "std"))] use std as alloc;
+#[cfg(all(feature = "alloc", not(feature = "std")))] extern crate alloc;
 #[cfg(feature = "serde")] pub extern crate serde;
 #[cfg(all(test,feature = "serde"))] extern crate serde_test;
 
@@ -164,7 +159,7 @@ pub trait Hash: Copy + Clone + PartialEq + Eq + PartialOrd + Ord +
     type Engine: HashEngine;
 
     /// The byte array that represents the hash internally.
-    type Inner: hex::FromHex;
+    type Bytes: hex::FromHex + Copy;
 
     /// Constructs a new engine.
     fn engine() -> Self::Engine {
@@ -192,14 +187,14 @@ pub trait Hash: Copy + Clone + PartialEq + Eq + PartialOrd + Ord +
     /// true for `Sha256dHash`, so here we are.
     const DISPLAY_BACKWARD: bool = false;
 
-    /// Unwraps the hash and returns the underlying byte array.
-    fn into_inner(self) -> Self::Inner;
+    /// Returns the underlying byte array.
+    fn to_byte_array(self) -> Self::Bytes;
 
-    /// Unwraps the hash and returns a reference to the underlying byte array.
-    fn as_inner(&self) -> &Self::Inner;
+    /// Returns a reference to the underlying byte array.
+    fn as_byte_array(&self) -> &Self::Bytes;
 
     /// Constructs a hash from the underlying byte array.
-    fn from_inner(inner: Self::Inner) -> Self;
+    fn from_byte_array(bytes: Self::Bytes) -> Self;
 
     /// Returns an all zero hash.
     ///
@@ -213,17 +208,22 @@ pub trait Hash: Copy + Clone + PartialEq + Eq + PartialOrd + Ord +
 mod tests {
     use crate::{Hash, sha256d};
 
-    hash_newtype!(TestNewtype, sha256d::Hash, 32, doc="A test newtype");
-    hash_newtype!(TestNewtype2, sha256d::Hash, 32, doc="A test newtype");
+    hash_newtype! {
+        /// A test newtype
+        struct TestNewtype(sha256d::Hash);
+
+        /// A test newtype
+        struct TestNewtype2(sha256d::Hash);
+    }
 
     #[test]
     fn convert_newtypes() {
         let h1 = TestNewtype::hash(&[]);
-        let h2: TestNewtype2 = h1.as_hash().into();
+        let h2: TestNewtype2 = h1.to_raw_hash().into();
         assert_eq!(&h1[..], &h2[..]);
 
         let h = sha256d::Hash::hash(&[]);
         let h2: TestNewtype = h.to_string().parse().unwrap();
-        assert_eq!(h2.as_hash(), h);
+        assert_eq!(h2.to_raw_hash(), h);
     }
 }

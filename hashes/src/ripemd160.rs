@@ -393,7 +393,7 @@ impl HashEngine {
 #[cfg(test)]
 mod tests {
     #[test]
-    #[cfg(any(feature = "std", feature = "alloc"))]
+    #[cfg(feature = "alloc")]
     fn test() {
         use crate::{Hash, HashEngine, ripemd160};
 
@@ -468,7 +468,7 @@ mod tests {
             }
             let manual_hash = ripemd160::Hash::from_engine(engine);
             assert_eq!(hash, manual_hash);
-            assert_eq!(hash.into_inner()[..].as_ref(), test.output.as_slice());
+            assert_eq!(hash.as_byte_array(), test.output.as_slice());
         }
     }
 

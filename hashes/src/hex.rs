@@ -7,7 +7,7 @@
 //
 //! Hex encoding and decoding.
 
-#[cfg(any(feature = "std", feature = "alloc"))]
+#[cfg(all(feature = "alloc", not(feature = "std")))]
 use crate::alloc::vec::Vec;
 
 #[cfg(any(test, feature = "std"))]
@@ -193,7 +193,7 @@ impl_fromhex_array!(384);
 impl_fromhex_array!(512);
 
 #[cfg(test)]
-#[cfg(any(feature = "std", feature = "alloc"))]
+#[cfg(feature = "alloc")]
 mod tests {
     use super::*;
     use internals::hex::exts::DisplayHex;

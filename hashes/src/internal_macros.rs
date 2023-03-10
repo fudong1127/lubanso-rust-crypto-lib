@@ -97,13 +97,19 @@ macro_rules! hash_trait_impls {
                 } else {
                     FromHex::from_byte_iter(HexIterator::new(s)?)?
                 };
-                Ok(Self::from_inner(inner))
+                Ok(Self::from_byte_array(inner))
             }
         }
 
         $crate::internal_macros::arr_newtype_fmt_impl!(Hash, $bits / 8 $(, $gen: $gent)*);
         serde_impl!(Hash, $bits / 8 $(, $gen: $gent)*);
         borrow_slice_impl!(Hash $(, $gen: $gent)*);
+
+        impl<$($gen: $gent),*> $crate::_export::_core::convert::AsRef<[u8; $bits / 8]> for Hash<$($gen),*> {
+            fn as_ref(&self) -> &[u8; $bits / 8] {
+                &self.0
+            }
+        }
 
         impl<I: SliceIndex<[u8]> $(, $gen: $gent)*> Index<I> for Hash<$($gen),*> {
             type Output = I::Output;
@@ -116,7 +122,7 @@ macro_rules! hash_trait_impls {
 
         impl<$($gen: $gent),*> crate::Hash for Hash<$($gen),*> {
             type Engine = HashEngine;
-            type Inner = [u8; $bits / 8];
+            type Bytes = [u8; $bits / 8];
 
             const LEN: usize = $bits / 8;
             const DISPLAY_BACKWARD: bool = $reverse;
@@ -139,16 +145,16 @@ macro_rules! hash_trait_impls {
                 }
             }
 
-            fn into_inner(self) -> Self::Inner {
+            fn to_byte_array(self) -> Self::Bytes {
                 self.0
             }
 
-            fn as_inner(&self) -> &Self::Inner {
+            fn as_byte_array(&self) -> &Self::Bytes {
                 &self.0
             }
 
-            fn from_inner(inner: Self::Inner) -> Self {
-                Self::internal_new(inner)
+            fn from_byte_array(bytes: Self::Bytes) -> Self {
+                Self::internal_new(bytes)
             }
 
             fn all_zeros() -> Self {

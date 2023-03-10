@@ -37,12 +37,12 @@ fn from_engine(e: HashEngine) -> Hash {
 #[cfg(test)]
 mod tests {
     #[test]
-    #[cfg(any(feature = "std", feature = "alloc"))]
+    #[cfg(feature = "alloc")]
     fn test() {
         use crate::{hash160, Hash, HashEngine};
 
         #[derive(Clone)]
-        #[cfg(any(feature = "std", feature = "alloc"))]
+        #[cfg(feature = "alloc")]
         struct Test {
             input: Vec<u8>,
             output: Vec<u8>,
@@ -85,7 +85,7 @@ mod tests {
             }
             let manual_hash = Hash::from_engine(engine);
             assert_eq!(hash, manual_hash);
-            assert_eq!(hash.into_inner()[..].as_ref(), test.output.as_slice());
+            assert_eq!(hash.to_byte_array()[..].as_ref(), test.output.as_slice());
         }
     }
 
