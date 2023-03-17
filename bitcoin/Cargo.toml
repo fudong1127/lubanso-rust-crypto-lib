@@ -5,24 +5,24 @@ edition = "2021"
 
 [features]
 default = [ "std", "secp-recovery" ]
-rand-std = ["secp256k1/rand-std"]
-rand = ["secp256k1/rand"]
-serde = ["actual-serde", "lubanso-hashes/serde", "secp256k1/serde"]
-secp-lowmemory = ["secp256k1/lowmemory"]
-secp-recovery = ["secp256k1/recovery"]
+rand-std = ["lubanso-secp256k1/rand-std"]
+rand = ["lubanso-secp256k1/rand"]
+serde = ["actual-serde", "lubanso-hashes/serde", "lubanso-secp256k1/serde"]
+secp-lowmemory = ["lubanso-secp256k1/lowmemory"]
+secp-recovery = ["lubanso-secp256k1/recovery"]
 # At least one of std, no-std must be enabled.
 #
 # The no-std feature doesn't disable std - you need to turn off the std feature for that by disabling default.
 # Instead no-std enables additional features required for this crate to be usable without std.
 # As a result, both can be enabled without conflict.
-std = ["secp256k1/std", "lubanso-hashes/std", "bech32/std", "lubanso-internals/std"]
-no-std = ["core2", "lubanso-hashes/alloc", "lubanso-hashes/core2", "secp256k1/alloc"]
+std = ["lubanso-secp256k1/std", "lubanso-hashes/std", "bech32/std", "lubanso-internals/std"]
+no-std = ["core2", "lubanso-hashes/alloc", "lubanso-hashes/core2", "lubanso-secp256k1/alloc"]
 
 [dependencies]
 lubanso-internals = { path = "../internals"}
+lubanso-hashes = { version = "0.1.0", path = "../hashes", default-features = false, optional = true }
 bech32 = { version = "0.9.0", default-features = false }
-lubanso-hashes = { path = "../hashes", default-features = false }
-secp256k1 = { version = "0.25.0", default-features = false, features = ["bitcoin_hashes"] }
+lubanso-secp256k1 = { version = "0.1.0", path = "../secp256k1", default-features = false, features = ["lubanso-hashes"] }
 hex_lit = "0.1.1"
 
 core2 = { version = "0.3.0", default-features = false, features = ["alloc"], optional = true }
@@ -33,7 +33,7 @@ actual-serde = { package = "serde", version = "1.0.103", default-features = fals
 serde_json = "1.0.0"
 serde_test = "1.0.19"
 serde_derive = "1.0.103"
-secp256k1 = { version = "0.25.0", features = ["recovery"] }
+lubanso-secp256k1 = { version = "0.1.0", path = "../secp256k1", features = ["recovery"] }
 bincode = "1.3.1"
 
 [target.'cfg(mutate)'.dev-dependencies]

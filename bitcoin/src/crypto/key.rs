@@ -8,7 +8,7 @@ use crate::prelude::*;
 use core::{ops, str::FromStr};
 use core::fmt::{self, Write};
 
-use lubanso_internals::write_err;
+use internals::write_err;
 
 pub use secp256k1::{self, constants, Secp256k1, KeyPair, XOnlyPublicKey, Verification, Parity};
 

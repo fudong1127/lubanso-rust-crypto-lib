@@ -5,14 +5,21 @@ Cargo.lock
 internals/Cargo.lock
 bitcoin/Cargo.lock
 hashes/Cargo.lock
+secp256k1/Cargo.lock
 
-
+#IntelliJ project files
+.idea
+*.iml
 
 # Build artifacts
 target
 internals/target
 bitcoin/target
 hashes/target
+secp256k1/target
 
 # Test artifacts
 bitcoin/dep_test
+
+CMakeLists.txt
+cmake-build-debug

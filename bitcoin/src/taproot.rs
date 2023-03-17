@@ -8,7 +8,7 @@ use core::convert::TryFrom;
 use core::fmt;
 use core::iter::FusedIterator;
 
-use lubanso_internals::write_err;
+use internals::write_err;
 use secp256k1::{self, Scalar, Secp256k1};
 
 use crate::consensus::Encodable;

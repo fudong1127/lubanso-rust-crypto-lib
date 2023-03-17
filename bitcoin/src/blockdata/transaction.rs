@@ -18,7 +18,7 @@ use crate::string::FromHexStr;
 use core::{cmp, fmt, str, default::Default};
 use core::convert::TryFrom;
 
-use lubanso_internals::write_err;
+use internals::write_err;
 
 use crate::hashes::{self, Hash, sha256d};
 
@@ -590,7 +590,7 @@ impl<E> EncodeSigningDataResult<E> {
     /// # use bitcoin::consensus::deserialize;
     /// # use bitcoin::sighash::{LegacySighash, SighashCache};
     /// # use bitcoin::Transaction;
-    /// # use bitcoin_hashes::{Hash, hex::FromHex};
+    /// # use lubanso_hashes::{Hash, hex::FromHex};
     /// # let mut writer = LegacySighash::engine();
     /// # let input_index = 0;
     /// # let script_pubkey = bitcoin::ScriptBuf::new();

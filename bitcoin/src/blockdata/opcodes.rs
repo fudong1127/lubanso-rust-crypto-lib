@@ -11,7 +11,7 @@
 #[cfg(feature = "serde")] use crate::prelude::*;
 
 use core::{fmt, convert::From};
-use lubanso_internals::debug_from_display;
+use internals::debug_from_display;
 
 /// A script Opcode.
 ///

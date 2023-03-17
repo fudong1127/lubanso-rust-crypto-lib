@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use core::fmt;
 
-use lubanso_internals::write_err;
+use internals::write_err;
 
 use crate::blockdata::transaction::Transaction;
 use crate::consensus::encode;
@@ -57,7 +57,7 @@ pub enum Error {
     },
     /// Unable to parse as a standard sighash type.
     NonStandardSighashType(u32),
-    /// Parsing errors from bitcoin_hashes
+    /// Parsing errors from lubanso_hashes
     HashParse(hashes::Error),
     /// The pre-image must hash to the correponding psbt hash
     InvalidPreimageHashPair {

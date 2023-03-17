@@ -66,7 +66,8 @@ pub extern crate bitcoinconsensus;
 #[cfg(feature = "hashbrown")]
 #[cfg_attr(docsrs, doc(cfg(feature = "hashbrown")))]
 pub extern crate hashbrown;
-pub extern crate secp256k1;
+pub extern crate lubanso_internals as internals;
+pub extern crate lubanso_secp256k1 as secp256k1;
 
 #[cfg(feature = "serde")]
 #[macro_use]
@@ -177,7 +178,7 @@ mod prelude {
     #[cfg(not(feature = "std"))]
     pub use crate::io_extras::sink;
 
-    pub use lubanso_internals::hex::display::DisplayHex;
+    pub use internals::hex::display::DisplayHex;
 }
 
 #[cfg(bench)]

@@ -6,7 +6,7 @@
 //! to support handling and parsing strings within `rust-bitcoin`.
 
 use core::fmt;
-use lubanso_internals::write_err;
+use internals::write_err;
 use crate::prelude::String;
 
 /// Trait that allows types to be initialized from hex strings

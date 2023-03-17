@@ -155,4 +155,4 @@ impl fmt::Display for Builder {
     }
 }
 
-lubanso_internals::debug_from_display!(Builder);
+internals::debug_from_display!(Builder);

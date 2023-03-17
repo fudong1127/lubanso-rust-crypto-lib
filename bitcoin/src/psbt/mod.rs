@@ -11,7 +11,7 @@ use std::collections::{HashMap, HashSet};
 use core::{fmt, cmp};
 
 use secp256k1::{Message, Secp256k1, Signing};
-use lubanso_internals::write_err;
+use internals::write_err;
 
 use crate::{prelude::*, Amount};
 

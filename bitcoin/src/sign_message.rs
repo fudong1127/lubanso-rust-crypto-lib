@@ -17,7 +17,7 @@ pub const BITCOIN_SIGNED_MSG_PREFIX: &[u8] = b"\x18Bitcoin Signed Message:\n";
 mod message_signing {
     use core::fmt;
 
-    use lubanso_internals::write_err;
+    use internals::write_err;
     use secp256k1;
     use secp256k1::ecdsa::{RecoverableSignature, RecoveryId};
 

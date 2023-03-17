@@ -5,8 +5,8 @@
 use core::str::FromStr;
 use core::{fmt, iter};
 
-use lubanso_internals::write_err;
-use lubanso_internals::hex::display::DisplayHex;
+use internals::write_err;
+use internals::hex::display::DisplayHex;
 use secp256k1;
 
 use crate::prelude::*;

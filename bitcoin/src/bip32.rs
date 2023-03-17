@@ -10,7 +10,7 @@ use core::fmt;
 use core::ops::Index;
 use core::str::FromStr;
 
-use lubanso_internals::{impl_array_newtype, write_err};
+use internals::{impl_array_newtype, write_err};
 use secp256k1::{self, Secp256k1, XOnlyPublicKey};
 #[cfg(feature = "serde")]
 use serde;
