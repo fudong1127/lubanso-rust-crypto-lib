@@ -240,8 +240,8 @@ mod tests {
     #[test]
     #[cfg(not(fuzzing))]
     #[cfg(all(feature = "lubanso-hashes-std", feature = "rand-std"))]
-    fn lubanso_hashes_and_sys_generate_same_secret() {
-        use lubanso_hashes::{sha256, Hash, HashEngine};
+    fn bitcoin_hashes_and_sys_generate_same_secret() {
+        use bitcoin_hashes::{sha256, Hash, HashEngine};
 
         use crate::ecdh::shared_secret_point;
 
@@ -260,7 +260,7 @@ mod tests {
         engine.input(&xy.as_ref()[..32]);
         let secret_bh = sha256::Hash::from_engine(engine);
 
-        assert_eq!(secret_bh.as_inner(), secret_sys.as_ref());
+        assert_eq!(secret_bh.as_byte_array(), secret_sys.as_ref());
     }
 
     #[test]

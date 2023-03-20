@@ -196,6 +196,7 @@ pub use lubanso_secp256k1_sys as ffi;
 #[cfg(feature = "serde")]
 #[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 pub use serde;
+
 pub use crate::context::*;
 use crate::ffi::types::AlignedType;
 use crate::ffi::CPtr;
@@ -262,7 +263,7 @@ impl Message {
     /// # Examples
     ///
     /// ```
-    /// # #[cfg(feature = "lubanso_hashes")] {
+    /// # #[cfg(feature = "lubanso-hashes")] {
     /// use secp256k1::hashes::{sha256, Hash};
     /// use secp256k1::Message;
     ///
@@ -1036,7 +1037,7 @@ mod tests {
         assert!(SECP256K1.verify_ecdsa(&msg, &sig, &pk).is_ok());
     }
 
-    #[cfg(feature = "lubanso-hashes")]
+    #[cfg(feature = "bitcoin_hashes")]
     #[test]
     fn test_from_hash() {
         use crate::hashes::{self, Hash};

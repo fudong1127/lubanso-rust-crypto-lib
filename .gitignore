@@ -23,3 +23,6 @@ bitcoin/dep_test
 
 CMakeLists.txt
 cmake-build-debug
+
+
+.vscode
